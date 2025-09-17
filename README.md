@@ -4,90 +4,111 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![OpenCV](https://img.shields.io/badge/OpenCV-ASCII--Cam-orange)
 
-
-
 ![Preview](https://raw.githubusercontent.com/Open-Seal/SAP/refs/heads/main/ascii.png)
 
+---
 
-Overview
-This Python script transforms live webcam video into an ASCII art representation in real-time using OpenCV. It captures frames from a webcam, converts them to grayscale, maps pixel intensities to ASCII characters, and renders the result as a colored or monochrome ASCII image. The script supports interactive controls to adjust resolution, toggle colorization, invert intensity, switch ASCII character sets, and save frames as PNG images.
-Features
+## Overview
 
-Real-time ASCII Art: Converts webcam video feed into ASCII art displayed in a window.
-Customizable Resolution: Adjusts the ASCII image resolution dynamically using keyboard controls.
-Color Support: Option to render ASCII characters in colors matching the original image or in monochrome.
-Invert Mode: Toggle between mapping light pixels to dense or sparse ASCII characters.
-Multiple ASCII Sets: Switch between a detailed or simple ASCII character set for rendering.
-Frame Saving: Save the current ASCII frame as a PNG file.
-Interactive Controls: Keyboard inputs to modify settings during runtime.
+**ASCII Cam** is a Python application that converts a live webcam feed into **ASCII art in real time**.
+It uses **OpenCV** for video capture and rendering, and **NumPy** for efficient pixel-to-character mapping.
+The output can be displayed in monochrome or colored ASCII characters, with configurable resolution, font size, intensity inversion, and multiple character sets.
 
-Requirements
+---
 
-Python 3.x
-OpenCV (opencv-python): For webcam capture, image processing, and rendering.
-NumPy: For efficient array operations.
+## Features
 
-Install the dependencies using pip:
+* **Real-time ASCII Rendering**: Live conversion of webcam input into ASCII art.
+* **Adjustable Resolution**: Dynamically increase or decrease the ASCII grid size.
+* **Color and Monochrome Modes**: Option to render ASCII characters with original frame colors or in white on black.
+* **Invert Mapping**: Reverse brightness-to-character mapping for stylistic variation.
+* **Multiple Character Sets**: Choose between a detailed 70-character set or a simplified 10-character set.
+* **Frame Export**: Save individual ASCII-rendered frames as PNG images.
+* **Interactive Controls**: Modify settings during runtime using keyboard input.
+
+---
+
+## Requirements
+
+* Python **3.8+**
+* OpenCV (`opencv-python`)
+* NumPy
+
+Install dependencies via pip:
+
+```bash
 pip install opencv-python numpy
+```
 
-Usage
+---
 
-Run the Script:
+## Usage
+
+Run the script:
+
+```bash
 python ascii_cam.py
+```
 
-Ensure a webcam is connected to your device. The script will open a window displaying the ASCII-rendered video feed.
+The application will open a resizable OpenCV window named **"ASCII Cam"** showing the live ASCII-rendered video stream.
 
-Keyboard Controls:
+---
 
-q or Esc: Quit the application.
-s: Save the current ASCII frame as a PNG file (e.g., ascii_frame_00001.png).
-[ : Decrease the ASCII image width (minimum 20 columns).
-] : Increase the ASCII image width (maximum 400 columns).
-g: Toggle between colored and monochrome ASCII rendering.
-i: Toggle intensity inversion (light pixels map to dense or sparse characters).
-1: Use the detailed ASCII character set.
-2: Use the simple ASCII character set.
+## Keyboard Controls
 
+| Key         | Action                                             |
+| ----------- | -------------------------------------------------- |
+| `q` / `Esc` | Exit the application                               |
+| `s`         | Save the current ASCII frame as a PNG file         |
+| `[`         | Decrease ASCII output width (minimum: 20 columns)  |
+| `]`         | Increase ASCII output width (maximum: 400 columns) |
+| `g`         | Toggle between colored and monochrome rendering    |
+| `i`         | Invert brightness mapping                          |
+| `1`         | Switch to the detailed ASCII set (70 characters)   |
+| `2`         | Switch to the simplified ASCII set (10 characters) |
+| `=`         | Increase font scale                                |
+| `-`         | Decrease font scale                                |
+| `t`         | Cycle through font thickness values (1–3)          |
 
-Output:
+---
 
-The ASCII art is displayed in a resizable OpenCV window named "ASCII Cam".
-Saved frames are stored in the working directory with filenames like ascii_frame_XXXXX.png.
+## Parameters
 
+* **`ascii_set_id`** — Character set selection (`0` = detailed, `1` = simple).
+* **`cols`** — Number of columns in the ASCII image (default: `160`).
+* **`colorize`** — Enable/disable color rendering (default: `False`).
+* **`invert`** — Invert pixel intensity mapping (default: `False`).
+* **`font_scale`** — Font size for ASCII characters (default: `0.45`).
+* **`thickness`** — Font thickness (default: `1`).
 
+---
 
-Code Structure
+## Code Structure
 
-ASCII_SETS: Defines two sets of ASCII characters for mapping pixel intensities:
-Detailed set: 70 characters for finer granularity.
-Simple set: 10 characters for a minimalistic look.
+* **`ASCII_SETS`**: Defines two ASCII character sets (70 and 10 symbols).
+* **`map_to_ascii`**: Maps normalized grayscale pixel intensities to ASCII characters.
+* **`render_ascii`**: Draws ASCII characters onto an OpenCV canvas with optional colorization.
+* **`main`**: Handles webcam capture, frame processing, and interactive controls.
 
+---
 
-map_to_ascii: Converts a grayscale image to an ASCII array by mapping normalized pixel intensities to characters.
-render_ascii: Renders the ASCII array onto a canvas, with options for colorization, font scale, and thickness.
-main: Handles webcam capture, frame processing, and user input for real-time rendering.
+## Notes
 
-Parameters
+* Ensure that your webcam is properly connected and accessible by OpenCV.
+* The ASCII image maintains the original aspect ratio.
+* Performance may vary depending on system resources and webcam resolution.
+* Uses OpenCV’s `FONT_HERSHEY_SIMPLEX` for cross-platform compatibility.
 
-ascii_set_id: Selects the ASCII character set (0 for detailed, 1 for simple).
-cols: Number of columns in the ASCII image (default: 160).
-colorize: Enables/disables colored ASCII rendering (default: False).
-invert: Inverts pixel intensity mapping (default: False).
-font_scale: Font size for rendering ASCII characters (default: 0.45).
-thickness: Font thickness for rendering (default: 1).
+---
 
-Notes
+## License
 
-Ensure your webcam is properly connected and accessible by OpenCV.
-The aspect ratio of the ASCII image is maintained based on the webcam's resolution.
-Performance may vary depending on the webcam resolution and system resources.
-The script uses OpenCV's FONT_HERSHEY_SIMPLEX for rendering, ensuring compatibility across platforms.
+This project is licensed under the **MIT License**.
+See the [LICENSE](LICENSE) file for details.
 
-Example
-Run the script, and a window will display your webcam feed as ASCII art. Press g to toggle colors, i to invert the intensity, or s to save a frame. Adjust the resolution with [ or ] for finer or coarser ASCII output.
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
-Acknowledgments
+---
 
-Built using OpenCV and NumPy for efficient image processing.
-Inspired by ASCII art generation techniques for real-time video rendering.
+## Acknowledgments
+
+* Built with **OpenCV** and **NumPy**.
+* Inspired by traditional ASCII art rendering techniques applied to real-time video.
